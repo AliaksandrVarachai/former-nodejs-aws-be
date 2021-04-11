@@ -58,15 +58,22 @@ const productsList = [
   }
 ];
 
-module.exports.getProductsList = async (event) => {
-  return {
-    statusCode: 200,
-    body: {
-      data: productsList,
-      input: event,
-    },
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+module.exports.getProductsById = async (event) => {
+  const { productId } = event.pathParameters;
+  const product = productsList.find(product => product.id === productId);
+  return product
+    ? {
+      statusCode: 200,
+      body: {
+        data: product,
+        input: event,
+      },
+    }
+    : {
+      statusCode: 404,
+      body: {
+        error: { message: 'Product is not found' },
+        input: event,
+      }
+    }
 };
