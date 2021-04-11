@@ -64,16 +64,16 @@ module.exports.getProductsById = async (event) => {
   return product
     ? {
       statusCode: 200,
-      body: {
+      body: JSON.stringify({
         data: product,
-        input: event,
-      },
+      }),
     }
     : {
       statusCode: 404,
-      body: {
-        error: { message: 'Product is not found' },
-        input: event,
-      }
-    }
+      body: JSON.stringify({
+        error: {
+          message: 'Product is not found',
+        },
+      }),
+    };
 };

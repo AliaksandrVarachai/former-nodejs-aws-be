@@ -61,9 +61,8 @@ const productsList = [
 module.exports.getProductsList = async (event) => {
   return {
     statusCode: 200,
-    body: {
+    body: JSON.stringify({
       data: productsList,
-      input: event,
-    },
+    }),
   };
 };
