@@ -65,7 +65,7 @@ const commonResponse = {
   }
 }
 
-module.exports.getProductsById = async (event) => {
+export default async (event) => {
   const { productId } = event.pathParameters;
   const product = productsList.find(product => product.id === productId);
 

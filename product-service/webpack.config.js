@@ -1,9 +1,24 @@
+const path = require('path');
 const slsw = require('serverless-webpack');
 
 module.exports = {
-  entry: {
-    'getProductsList': './handlers/getProductsList.js',
-    'getProductById': './handlers/getProductsById.js',
-  },
+  context: __dirname,
+  entry: slsw.lib.entries,
   target: 'node',
+  // mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [
+          { loader: 'babel-loader' }
+        ]
+      },
+    ]
+  },
+  output: {
+    libraryTarget: 'commonjs',
+    path: path.join(__dirname, '.webpack'),
+    filename: '[name].js'
+  }
 }

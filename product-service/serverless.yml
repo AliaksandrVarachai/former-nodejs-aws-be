@@ -22,7 +22,7 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs12.x
   lambdaHashingVersion: 20201221
   stage: dev
   region: eu-west-1
@@ -66,14 +66,14 @@ plugins:
 
 functions:
   getProductsList:
-    handler: handlers/getProductsList.getProductsList
+    handler: handlers/getProductsList.default
     events:
       - http:
           path: /products/list
           method: get
           cors: true
   getProductsById:
-    handler: handlers/getProductsById.getProductsById
+    handler: handlers/getProductsById.default
     events:
       - http:
           path: /products/{productId}

@@ -58,7 +58,7 @@ const productsList = [
   }
 ];
 
-module.exports.getProductsList = async (event) => {
+export default async (event) => {
   return {
     statusCode: 200,
     headers: {
