@@ -5,6 +5,7 @@ values
     ('Product3', 'Description 3', 29)
 ;
 
+insert into stocks (product_id, count)
 values
     ((select product_id from products where title = 'Product1'), 15),
     ((select product_id from products where title = 'Product1'), 3),
