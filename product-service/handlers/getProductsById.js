@@ -16,7 +16,7 @@ export default async (event) => {
     return {
       headers: corsHeaders,
       statusCode: 500,
-      body: getErrorView(error.message),
+      body: getErrorView(error),
     };
   }
 };

@@ -30,7 +30,7 @@ count is number.`),
     return {
       headers: corsHeaders,
       statusCode: 500,
-      body: getErrorView(error.message),
+      body: getErrorView(error),
     }
   }
 };
