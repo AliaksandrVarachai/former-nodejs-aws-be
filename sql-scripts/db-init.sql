@@ -17,7 +17,7 @@ create table products (
 -- drop table stocks
 create table stocks (
     stock_id uuid primary key default uuid_generate_v4(),
-    product_id uuid references products (product_id) on delete cascade,
+    product_id uuid not null references products (product_id) on delete cascade,
     count int4 check ("count" >= 0),
     created_at timestamp not null default now(),
     updated_at timestamp not null default now()

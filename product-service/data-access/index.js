@@ -13,7 +13,22 @@ const client = new Client({
 export async function index() {
   await client.connect();
   try {
-    const res = await client.query('SELECT product_id, title, description, price FROM products');
+    const res = await client.query(
+      `
+        SELECT 
+          p.product_id, 
+          p.title, 
+          p.description, 
+          p.price, 
+          SUM(s.count) AS count 
+        FROM products AS p
+        INNER JOIN stocks AS s 
+        ON p.product_id = s.product_id
+        GROUP BY p.product_id
+        HAVING SUM(s.count) > 0
+        ORDER BY p.title;
+      `
+    );
     return res.rows;
   } catch (error) {
     throw(error.message);
@@ -25,7 +40,22 @@ export async function index() {
 export async function getProductsById(id) {
   await client.connect();
   try {
-    const res = await client.query('SELECT title, description, price FROM products WHERE $1=product_id', [id]);
+    const res = await client.query(
+      `
+        WITH all_stocks AS (
+          SELECT count FROM stocks WHERE product_id = $1
+        )
+        SELECT 
+          p.product_id, 
+          p.title, 
+          p.description, 
+          p.price, 
+          (SELECT SUM(count) from all_stocks) AS count 
+        FROM products AS p
+        WHERE p.product_id = $1;
+      `,
+      [id]
+    );
     return res.rows;
   } catch (error) {
     throw(error.message);
