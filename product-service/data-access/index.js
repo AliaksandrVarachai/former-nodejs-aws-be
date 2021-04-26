@@ -2,15 +2,16 @@ import { Client } from 'pg';
 
 const { PG_HOST, PG_PORT, PG_DATABASE, PG_USERNAME, PG_PASSWORD } = process.env;
 
-const client = new Client({
+const dbOptions = {
   host: PG_HOST,
   port: PG_PORT,
   database: PG_DATABASE,
   user: PG_USERNAME,
   password: PG_PASSWORD,
-});
+}
 
 export async function index() {
+  const client = new Client(dbOptions);
   await client.connect();
   try {
     const res = await client.query(
@@ -38,6 +39,7 @@ export async function index() {
 }
 
 export async function getProductsById(id) {
+  const client = new Client(dbOptions);
   await client.connect();
   try {
     const res = await client.query(
