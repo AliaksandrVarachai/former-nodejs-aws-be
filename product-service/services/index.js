@@ -11,7 +11,7 @@ export async function index() {
     title,
     description,
     price,
-    count,
+    count: Number(count),
   }));
 }
 
@@ -29,6 +29,6 @@ export async function getProductsById(id) {
     title,
     description,
     price,
-    count,
+    count: Number(count),
   };
 }
