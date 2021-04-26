@@ -1,14 +1,13 @@
-const defaultErrorMessage = 'Unknown error';
+import getErrorMessage from '../handlers/helpers/get-error-message';
 
 export function getSuccessView(data) {
   return JSON.stringify(data);
 }
 
 export function getErrorView(error) {
-  const message = typeof error === 'string' ? error : (error?.message || defaultErrorMessage);
   return JSON.stringify({
     error: {
-      message,
+      message: getErrorMessage(error),
     },
   });
 }
