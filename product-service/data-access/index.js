@@ -1,14 +1,5 @@
 import { Client } from 'pg';
-
-const { PG_HOST, PG_PORT, PG_DATABASE, PG_USERNAME, PG_PASSWORD } = process.env;
-
-const dbOptions = {
-  host: PG_HOST,
-  port: PG_PORT,
-  database: PG_DATABASE,
-  user: PG_USERNAME,
-  password: PG_PASSWORD,
-}
+import dbOptions from './db-options';
 
 export async function index() {
   const client = new Client(dbOptions);
@@ -60,6 +51,45 @@ export async function getProductsById(id) {
     );
     return res.rows;
   } catch (error) {
+    throw(error.message);
+  } finally {
+    await client.end();
+  }
+}
+
+export async function createProduct({ title, description, price, count }) {
+  const client = new Client(dbOptions);
+  await client.connect();
+  try {
+    await client.query('BEGIN');
+    const { rows: [{ product_id }] } = await client.query(
+      `
+        INSERT INTO products (title, description, price)
+        VALUES ($1, $2, $3)
+        RETURNING product_id;
+      `,
+      [title, description, price]
+    );
+
+    const { rows: [{ stock_id }] } = await client.query(
+      `
+        INSERT INTO stocks (product_id, count)
+        VALUES ($1, $2)
+        RETURNING stock_id;
+      `,
+      [product_id, count]
+    );
+    await client.query('COMMIT');
+    return {
+      product_id,
+      title,
+      description,
+      price,
+      stock_id,
+      count,
+    };
+  } catch (error) {
+    await client.query('ROLLBACK');
     throw(error.message);
   } finally {
     await client.end();

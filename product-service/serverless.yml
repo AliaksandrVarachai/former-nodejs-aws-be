@@ -83,6 +83,13 @@ functions:
           path: /products/{productId}
           method: get
           cors: true
+  createProduct:
+    handler: handlers/createProduct.default
+    events:
+      - http:
+          path: /products
+          method: post
+          cors: true
 
 
 #    The following are a few example events you can configure

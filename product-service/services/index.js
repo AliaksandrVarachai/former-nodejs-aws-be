@@ -32,3 +32,15 @@ export async function getProductsById(id) {
     count: Number(count),
   };
 }
+
+export async function createProduct({ title, description, price, count }) {
+  const { product_id, stock_id } = await dataProvider.createProduct({ title, description, price, count });
+  return {
+    productId: product_id,
+    title,
+    description,
+    price,
+    stockId: stock_id,
+    count: Number(count),
+  };
+}
