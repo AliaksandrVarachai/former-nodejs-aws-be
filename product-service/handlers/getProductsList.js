@@ -13,7 +13,7 @@ export default async (event) => {
     };
   } catch (error) {
     return {
-      statusCode: 400,
+      statusCode: 500,
       headers: corsHeaders,
       body: getErrorView(error.message),
     }

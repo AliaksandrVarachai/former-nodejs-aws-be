@@ -15,7 +15,7 @@ export default async (event) => {
   } catch (error) {
     return {
       headers: corsHeaders,
-      statusCode: 404,
+      statusCode: 500,
       body: getErrorView(error.message),
     };
   }
