@@ -1,30 +1,22 @@
 'use strict';
-import * as serviceProvider from '../services'
-
-const commonResponse = {
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true,
-  }
-}
+import * as serviceProvider from '../services';
+import corsHeaders from './helpers/cors-headers';
+import { getSuccessView, getErrorView } from '../views';
 
 export default async (event) => {
   const { productId } = event.pathParameters;
-  const product = await serviceProvider.getProductsById(productId);
-
-  return product
-    ? {
-      ...commonResponse,
+  try {
+    const product = await serviceProvider.getProductsById(productId);
+    return {
+      headers: corsHeaders,
       statusCode: 200,
-      body: JSON.stringify(product),
-    }
-    : {
-      ...commonResponse,
-      statusCode: 404,
-      body: JSON.stringify({
-        error: {
-          message: 'Product is not found',
-        },
-      }),
+      body: getSuccessView(product),
     };
+  } catch (error) {
+    return {
+      headers: corsHeaders,
+      statusCode: 404,
+      body: getErrorView(error.message),
+    };
+  }
 };

@@ -1,14 +1,21 @@
 'use strict';
 import * as serviceProvider from '../services';
+import corsHeaders from './helpers/cors-headers';
+import { getSuccessView, getErrorView } from '../views';
 
 export default async (event) => {
-  const productList = await serviceProvider.index();
-  return {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    },
-    body: JSON.stringify(productList),
-  };
+  try {
+    const productList = await serviceProvider.getProductsList();
+    return {
+      statusCode: 200,
+      headers: corsHeaders,
+      body: getSuccessView(productList),
+    };
+  } catch (error) {
+    return {
+      statusCode: 400,
+      headers: corsHeaders,
+      body: getErrorView(error.message),
+    }
+  }
 };

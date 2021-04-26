@@ -4,8 +4,8 @@ import * as dataProvider from '../data-access';
  * Provides list of products.
  * @returns {Promise<Array[{ id, title, description, price, count }]>}
  */
-export async function index() {
-  const productsList = await dataProvider.index();
+export async function getProductsList() {
+  const productsList = await dataProvider.getProductsList();
   return productsList.map(({ product_id, title, description, price, count }) => ({
     id: product_id,
     title,

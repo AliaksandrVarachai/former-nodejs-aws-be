@@ -1,7 +1,7 @@
 import { Client } from 'pg';
 import dbOptions from './db-options';
 
-export async function index() {
+export async function getProductsList() {
   const client = new Client(dbOptions);
   await client.connect();
   try {
