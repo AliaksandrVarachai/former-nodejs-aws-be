@@ -9,21 +9,22 @@ const S3_OPTIONS = { region: 'eu-west-1' };
 export default async (event, context) => {
   const s3 = new AWS.S3(S3_OPTIONS);
   const { name: filename } = event.queryStringParameters;
-  const params = {
-    Bucket: BUCKET,
-    Key: filename,
-  };
   try {
-    const s3Response = await s3.getObject(params).promise();
+    const signedUrl = await s3.getSignedUrlPromise('putObject', {
+      Bucket: BUCKET,
+      Key: `import/${filename}`,
+      Expires: 600,
+      ContentType: 'text/csv',
+    });
     const response = {
       headers: {
         ...corsHeaders,
-        'Content-Type': 'text/csv',
+        'Content-Type': 'text/plain',
       },
       statusCode: 200,
-      body: s3Response.Body.toString(),
+      body: signedUrl,
     };
-    logSuccess(event, context);
+    logSuccess(event, context, signedUrl);
     return response;
   } catch (error) {
     const response = {
