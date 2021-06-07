@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk';
 import path from 'path';
-import corsHeaders from './helpers/cors-headers';
+import corsHeaders from '../../libs/cors-headers';
 import { getErrorView } from '../views';
-import { logSuccess, logError } from './helpers/loggers';
+import { logSuccess, logError } from '../../libs/loggers';
 
 const BUCKET = 'nodejs-aws-import-service';
 const S3_OPTIONS = { region: 'eu-west-1' };

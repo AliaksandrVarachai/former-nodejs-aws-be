@@ -1,4 +1,4 @@
-import getErrorMessage from '../handlers/helpers/get-error-message';
+import getErrorMessage from '../../libs/get-error-message';
 
 export function getSuccessView(data) {
   return JSON.stringify(data);

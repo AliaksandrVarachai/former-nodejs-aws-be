@@ -25,7 +25,7 @@ custom:
   bucketName: nodejs-aws-import-service
   webpack:
     webpackConfig: webpack.config.js
-    includeModules: false
+    includeModules: true
 
 plugins:
   - serverless-webpack

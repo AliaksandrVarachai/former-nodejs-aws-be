@@ -1,8 +1,8 @@
 'use strict';
 import * as serviceProvider from '../services';
-import corsHeaders from './helpers/cors-headers';
+import corsHeaders from '../../libs/cors-headers';
 import { getSuccessView, getErrorView } from '../views';
-import { logSuccess, logError } from './helpers/loggers';
+import { logSuccess, logError } from '../../libs/loggers';
 
 export default async (event, context) => {
   try {
