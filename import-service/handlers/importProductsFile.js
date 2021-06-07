@@ -4,17 +4,16 @@ import corsHeaders from '../../libs/cors-headers';
 import { getErrorView } from '../views';
 import { logSuccess, logError } from '../../libs/loggers';
 
-const BUCKET = 'nodejs-aws-import-service';
-const S3_OPTIONS = { region: 'eu-west-1' };
-const UPLOADED_PATH = 'uploaded/';
+const { S3_NAME, S3_OPTIONS_REGION, S3_UPLOADED_PATH } = process.env;
+const s3Options = { region: S3_OPTIONS_REGION };
 
 export default async (event, context) => {
-  const s3 = new AWS.S3(S3_OPTIONS);
+  const s3 = new AWS.S3(s3Options);
   const { name: filename } = event.queryStringParameters;
   try {
     const signedUrl = await s3.getSignedUrlPromise('putObject', {
-      Bucket: BUCKET,
-      Key: path.join(UPLOADED_PATH, filename),
+      Bucket: S3_NAME,
+      Key: path.join(S3_UPLOADED_PATH, filename),
       Expires: 600,
       ContentType: 'text/csv',
     });

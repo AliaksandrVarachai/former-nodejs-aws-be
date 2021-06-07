@@ -1,17 +1,15 @@
 import AWS from 'aws-sdk';
 import csvParser from 'csv-parser';
 
-const BUCKET = 'nodejs-aws-import-service';
-const S3_OPTIONS = { region: 'eu-west-1' };
-const UPLOADED_PATH = 'uploaded/';
-const PARSED_PATH = 'parsed/';
+const { S3_NAME, S3_OPTIONS_REGION, S3_UPLOADED_PATH, S3_PARSED_PATH } = process.env;
+const s3Options = { region: S3_OPTIONS_REGION };
 
 export default async (event, context) => {
-  const s3 = new AWS.S3(S3_OPTIONS);
+  const s3 = new AWS.S3(s3Options);
   for (const record of event.Records) {
     const s3ObjectKey = record.s3.object.key;
     const params = {
-      Bucket: BUCKET,
+      Bucket: S3_NAME,
       Key: s3ObjectKey,
     };
     try {
@@ -30,17 +28,17 @@ export default async (event, context) => {
         });
 
       await s3.copyObject({
-        Bucket: BUCKET,
-        CopySource: `${BUCKET}/${s3ObjectKey}`,
-        Key: s3ObjectKey.replace(UPLOADED_PATH, PARSED_PATH),
+        Bucket: S3_NAME,
+        CopySource: `${S3_NAME}/${s3ObjectKey}`,
+        Key: s3ObjectKey.replace(S3_UPLOADED_PATH, S3_PARSED_PATH),
       }).promise();
-      console.log(`${s3ObjectKey} is successfully copied to ${PARSED_PATH}`);
+      console.log(`${s3ObjectKey} is successfully copied to ${S3_PARSED_PATH}`);
 
       await s3.deleteObject({
-        Bucket: BUCKET,
+        Bucket: S3_NAME,
         Key: s3ObjectKey,
       }).promise();
-      console.log(`${s3ObjectKey} is successfully deleted from ${UPLOADED_PATH}`);
+      console.log(`${s3ObjectKey} is successfully deleted from ${S3_UPLOADED_PATH}`);
     } catch (error) {
       console.error(error);
     }
