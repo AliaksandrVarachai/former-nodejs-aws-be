@@ -6,7 +6,7 @@ module.exports = {
   context: __dirname,
   entry: slsw.lib.entries,
   target: 'node',
-  // mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   module: {
     rules: [
       {

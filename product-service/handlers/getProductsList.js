@@ -1,8 +1,8 @@
 'use strict';
 import * as serviceProvider from '../services';
-import corsHeaders from '../../libs/cors-headers';
+import corsHeaders from '../../shared-libs/lib/cors-headers';
 import { getSuccessView, getErrorView } from '../views';
-import { logSuccess, logError } from '../../libs/loggers';
+import { logSuccess, logError } from '../../shared-libs/lib/loggers';
 
 export default async (event, context) => {
   try {
@@ -16,7 +16,7 @@ export default async (event, context) => {
     return response;
   } catch (error) {
     const response =  {
-      statusCode: 500,
+      statusCode: 404,
       headers: corsHeaders,
       body: getErrorView(error),
     };

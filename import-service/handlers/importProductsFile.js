@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk';
 import path from 'path';
-import corsHeaders from '../../libs/cors-headers';
+import corsHeaders from '../../shared-libs/lib/cors-headers';
 import { getErrorView } from '../views';
-import { logSuccess, logError } from '../../libs/loggers';
+import { logSuccess, logError } from '../../shared-libs/lib/loggers';
 
 const { S3_NAME, S3_OPTIONS_REGION, S3_UPLOADED_PATH } = process.env;
 const s3Options = { region: S3_OPTIONS_REGION };
@@ -27,7 +27,7 @@ export default async (event, context) => {
     };
     logSuccess(event, context, signedUrl);
     return response;
-  } catch (error) {
+  } catch (error) /* istanbul ignore next */ {
     const response = {
       headers: corsHeaders,
       statusCode: 500,
