@@ -22,7 +22,7 @@ paths:
       operationId: getProductsList
       description: Provides products list
       produces:
-      - application/json
+        - application/json
       responses:
         200:
           description: products list
@@ -30,8 +30,44 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ProductItem'
+        500:
+          description: Server error
+    post:
+      tags:
+        - developers
+      summary: Adds a product
+      operationId: createProduct
+      description: Creates a new product
+      consumes: 
+      - application/json
+      parameters:
+        - in: body
+          name: createProductId
+          description: ID of a product
+          schema:
+            type: object
+            required:
+              - title
+              - price
+              - count
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              price:
+                type: integer
+              count:
+                type: integer
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Product is created
         400:
-          description: bad input parameter
+          description: Wrond data schema
+        500:
+          description: Server error
   /products/{productId}:
     get:
       tags:
@@ -51,8 +87,8 @@ paths:
       responses:
         200:
           description: product is found
-        404:
-          description: product is not found
+        500:
+          description: Server error
 definitions:
   ProductItem:
     type: object
