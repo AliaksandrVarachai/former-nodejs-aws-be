@@ -200,6 +200,7 @@ font-style: italic;
   </ul>
   <h4><a href="#Developers">Developers</a></h4>
   <ul>
+  <li><a href="#createProduct"><code><span class="http-method">post</span> /products</code></a></li>
   <li><a href="#getProductsList"><code><span class="http-method">get</span> /products</code></a></li>
   </ul>
 
@@ -238,12 +239,60 @@ font-style: italic;
     <h4 class="field-label">200</h4>
     product is found
         <a href="#"></a>
-    <h4 class="field-label">404</h4>
-    product is not found
+    <h4 class="field-label">500</h4>
+    Server error
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <h1><a name="Developers">Developers</a></h1>
+  <div class="method"><a name="createProduct"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /products</code></pre></div>
+    <div class="method-summary">Adds a product (<span class="nickname">createProduct</span>)</div>
+    <div class="method-notes">Creates a new product</div>
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="header">Content-Type</span> request header:
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">createProductId  (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; ID of a product </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Product is created
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Wrond data schema
+        <a href="#"></a>
+    <h4 class="field-label">500</h4>
+    Server error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
   <div class="method"><a name="getProductsList"/>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
@@ -292,8 +341,8 @@ font-style: italic;
     <h4 class="field-label">200</h4>
     products list
         
-    <h4 class="field-label">400</h4>
-    bad input parameter
+    <h4 class="field-label">500</h4>
+    Server error
         <a href="#"></a>
   </div> <!-- method -->
   <hr/>

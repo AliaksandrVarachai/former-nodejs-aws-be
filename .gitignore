@@ -1,4 +1,5 @@
 .DS_store
+.webpack
 
 # Logs
 logs
